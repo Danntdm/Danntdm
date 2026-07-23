@@ -21,53 +21,29 @@ jobs:
       contents: write
 
     steps:
-      - name: Generate GitHub profile metrics
+      - name: Generate GitHub profile metrics (left)
         uses: lowlighter/metrics@latest
         with:
-          # The SVG that will be created
-          filename: github-metrics.svg
-
-          # Secret containing your GitHub token
+          filename: github-metrics-left.svg
           token: ${{ secrets.METRICS_TOKEN }}
-
-          # Automatically uses the owner of this repository
           user: ${{ github.repository_owner }}
-
-          # Keeps only the useful account header
           base: header
-
-          # Overall appearance
-          template: classic
+          base_indepth: yes
           config_timezone: America/Los_Angeles
-          config_display: large
-          config_animations: yes
-
-          # -------------------------
-          # Starred topics
-          # -------------------------
-          plugin_topics: yes
-          plugin_topics_mode: icons
-          plugin_topics_limit: 16
-
-          # -------------------------
-          # People / followers
-          # -------------------------
-          plugin_people: yes
-          plugin_people_types: followers
-          plugin_people_limit: 24
-
-          # -------------------------
-          # GitHub City
-          # -------------------------
-          plugin_skyline: yes
-          plugin_skyline_year: 2026
-          plugin_skyline_frames: 6
-          plugin_skyline_quality: 1
-
-          plugin_skyline_settings: |
-            {
-              "url": "https://honzaap.github.io/GithubCity?name=${login}&year=${year}",
-              "ready": "[...document.querySelectorAll('.display-info span')].map(span => span.innerText).includes('${login}')",
-              "wait": 4,
-              "hide": ".github-corner, .footer-link, .buttons-options, .mobile-rotate, .display-info span:first-child"
-            }
+          plugin_isocalendar: yes
+          plugin_languages: yes
+          
+      - name: Generate Github profile metrics (right)
+        uses: lowlighter/metrics@latest
+        with:
+            filename: github-metrics-right.svg
+            base: ""
+            token: ${{ secrets.METRICS_TOKEN }}
+            user: ${{ github.repository_owner }}
+            plugin_topics: yes
+            plugin_topics_mode: icons
+            plugin_topics_limit: 16
+            plugin_people: yes
+            plugin_people_types: followers
+            plugin_people_limit: 24
+            
